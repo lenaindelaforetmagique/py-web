@@ -1,2 +1,3 @@
 # py-web
-Libraries for HTML, CSV, ... in python
+Libraries for XML, HTML, CSV and other to come in python.
+
