@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 SVGlib
-20/03/2018
+22/03/2018
 X. Morin
 A SVG library for python.
 
@@ -10,17 +10,22 @@ Contains a SVGpicture class that produce a svg-string to integrate to html pages
 
 SVGpicture methods:
 * rect
-* line
 * circle
+* ellipse
+* line
+* polygon
+* polyline
 
 """
 
+from XMLlib import *
 
-class SVGpicture:
-    def __init__(self, width = 0, height = 0):
-        self.width = width
-        self.height = height
-        self.stack = []
+class SVGpicture(XMLblock):
+    def __init__(self, width=0, height=0):
+        XMLblock.__init__(self, 'svg', args='width="{}" height="{}"'.format(width, height))
+        self.sep = ''
+        # self.width = width
+        # self.height = height
 
     def rect(self,
         x=0, y=0,
@@ -35,14 +40,14 @@ class SVGpicture:
             res += 'ry={} '.format(ry)
         res += 'fill="{}" stroke="{}" stroke-width="{}" '.format(fill, stroke, strokewidth)
         res += '/>'
-        self.stack.append(res)
+        self.addLine(res)
 
     def circle(self, cx=0, cy=0, r=0, fill="none", stroke="black", strokewidth=1):
         res = '<circle '
         res += 'cx="{}" cy="{}" r="{}" '.format(cx, cy, r)
         res += 'fill="{}" stroke="{}" stroke-width="{}" '.format(fill, stroke, strokewidth)
         res += '/>'
-        self.stack.append(res)
+        self.addLine(res)
 
     def ellipse(self,
         cx=0, cy=0, rx=0, ry=0,
@@ -51,7 +56,7 @@ class SVGpicture:
         res += 'cx="{}" cy="{}" rx="{}" ry="{}" '.format(cx, cy, rx, ry)
         res += 'fill="{}" stroke="{}" stroke-width="{}" '.format(fill, stroke, strokewidth)
         res += '/>'
-        self.stack.append(res)
+        self.addLine(res)
 
     def line(self,
         x1=0, y1=0, x2=0, y2=0,
@@ -60,7 +65,7 @@ class SVGpicture:
         res += 'x1="{}" y1="{}" x2="{}" y2="{}" '.format(x1, y1, x2, y2)
         res += 'stroke="{}" stroke-width="{}" '.format(stroke, strokewidth)
         res += '/>'
-        self.stack.append(res)
+        self.addLine(res)
 
     def polygon(self,
         listOfPoints,
@@ -72,7 +77,7 @@ class SVGpicture:
         res += 'points="{}" '.format(pointsCoords)
         res += 'fill="{}" stroke="{}" stroke-width="{}" '.format(fill, stroke, strokewidth)
         res += '/>'
-        self.stack.append(res)
+        self.addLine(res)
 
     def polyline(self,
         listOfPoints,
@@ -84,14 +89,4 @@ class SVGpicture:
         res += 'points="{}" '.format(pointsCoords)
         res += 'fill="{}" stroke="{}" stroke-width="{}" '.format(fill, stroke, strokewidth)
         res += '/>'
-        self.stack.append(res)
-
-    def __repr__(self):
-        res = '<svg width="{}" height="{}">'.format(self.width, self.height)
-        for s in self.stack:
-            res += s
-        res += '</svg>\n'
-        return res
-
-    def __str__(self):
-        return self.__repr__()
+        self.addLine(res)
