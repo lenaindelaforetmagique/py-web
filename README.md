@@ -8,6 +8,6 @@ Contains :
 * SVGlib.py : library to text-edit SVG pictures
 
 ## examples
-Contains exercises proposed by The Coding Train:
+Contains exercises proposed by The Coding Train channel on Youtube during pi-day 2018:
 * pi-day02.py, pi-day.py, main.py
 * digitsofpi.htm, digitsofpi2.htm, test.html : html files generates by py-files
