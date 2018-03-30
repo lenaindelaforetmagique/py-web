@@ -90,3 +90,28 @@ class SVGpicture(XMLblock):
         res += 'fill="{}" stroke="{}" stroke-width="{}" '.format(fill, stroke, strokewidth)
         res += '/>'
         self.addLine(res)
+
+    class TEXT(XMLblock):
+        def __init__(self, args=None):
+            XMLblock.__init__(self, 'text', args)
+            self.sep = ''
+
+    def text(self,
+        x=0, y=0,
+        string="",
+        fill="black",
+        fontfamily=None,
+        fontsize=None,
+        transform=None):
+        args = 'x="{}" y="{}" align="center" '.format(x, y)
+        if fill is not None:
+            args += 'fill="{}" '.format(fill)
+        if fontfamily is not None:
+            args += 'font-family="{}" '.format(fontfamily)
+        if fontsize is not None:
+            args += 'font-size="{}" '.format(fontsize)
+        if transform is not None:
+            args += 'transform="{}" '.format(transform)
+        res = self.TEXT(args)
+        res.addLine(string)
+        self.addLine(str(res))
